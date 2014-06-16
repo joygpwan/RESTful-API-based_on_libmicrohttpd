@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) Guangping Wan (joygpwan)
+ */
+
 #ifndef REQUEST_ANALYSIS_H
 #define REQUEST_ANALYSIS_H
 
