@@ -1060,65 +1060,58 @@ int get_bucket_header_yes(struct MHD_Response *response,struct sender_head send_
 	printf("get response header date : %s \n",header_add);
 
 
+	header_add = MHD_get_response_header (response,"Connection");	
+	// ltoa(buf.st_size,temp,10);
 
-
-
-
-		header_add = MHD_get_response_header (response,"Connection");	
-			// ltoa(buf.st_size,temp,10);
-
-			if (header_add != NULL)
-			{
+	if (header_add != NULL)
+	{
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
 					
-						//err_sys("get_object_header_yes Tran_Date error");
-					 strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
-					
-			}
-			else
-			{
-				if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
-					err_sys("get_bucket_header_yes MHD_add_response_header Connection error");
-		
-			}
-
-
-	
-    	header_add = MHD_get_response_header (response,"Content-Type");	
-		//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-				
-					//err_sys("get_object_header_yes Tran_Date error");
-				 strncpy(header_add,"application/xml",strlen("application/xml")+1);
-				
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"application/xml", "application/xml")==0)
-				err_sys("get_bucket_header_yes MHD_add_response_header Content-Length error");
-	
-		}
-
-		
-		header_add = MHD_get_response_header (response,"Server"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"Store B409",strlen("Store B409")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"Server", "Store B409")==0)
-				err_sys("get_object_header_yes MHD_add_response_header Content-Length error");
-			
-		}           
-		free(temp);
-		free(date);              
-		return 1;                        
 	}
+	else
+	{
+		if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
+			err_sys("get_bucket_header_yes MHD_add_response_header Connection error");
+		
+	}
+
+
+    	header_add = MHD_get_response_header (response,"Content-Type");	
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"application/xml",strlen("application/xml")+1);
+				
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"application/xml", "application/xml")==0)
+			err_sys("get_bucket_header_yes MHD_add_response_header Content-Length error");
+	
+	}
+
+		
+	header_add = MHD_get_response_header (response,"Server"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+						
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"Store B409",strlen("Store B409")+1);
+						
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"Server", "Store B409")==0)
+			err_sys("get_object_header_yes MHD_add_response_header Content-Length error");
+			
+	}           
+	free(temp);
+	free(date);              
+	return 1;                        
+}
 
 
 
@@ -1156,7 +1149,7 @@ int post_bucket_header_yes(struct MHD_Response *response,struct sender_head send
 {
 
 	
-		char *header_add,*temp,*date;
+	char *header_add,*temp,*date;
 	struct stat buf;
 	temp=(char *)malloc(BUFLENGTH*sizeof(char));
 	date=(char *)malloc(BUFLENGTH*sizeof(char));
@@ -1188,230 +1181,182 @@ int post_bucket_header_yes(struct MHD_Response *response,struct sender_head send
 	}
 
 
-		header_add = MHD_get_response_header (response,"Connection");	
-			// ltoa(buf.st_size,temp,10);
-			if (header_add != NULL)
-			{
+	header_add = MHD_get_response_header (response,"Connection");	
+	// ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
 					
-						//err_sys("get_object_header_yes Tran_Date error");
-					 strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
 					
-			}
-			else
-			{
-				if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
-					err_sys("post_bucket_header_yes MHD_add_response_header Connection error");
-		
-			}
-
-
-	
-   
-		
-		header_add = MHD_get_response_header (response,"Server"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"Store B409",strlen("Store B409")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"Server", "Store B409")==0)
-				err_sys("post_bucket_header_yes MHD_add_response_header Server error");
-			
-		}
-
-
-
-		header_add = MHD_get_response_header (response,"x-amz-id-2"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80",strlen("JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"x-amz-id-2", "JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80")==0)
-				err_sys("post_bucket_header_yes MHD_add_response_header x-amz-id-2 error");
-			
-		}
-
-
-
-		header_add = MHD_get_response_header (response,"x-amz-request-id"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"32FE2CEB32F5EE25",strlen("32FE2CEB32F5EE25")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"x-amz-request-id", "32FE2CEB32F5EE25")==0)
-				err_sys("post_bucket_header_yes MHD_add_response_header x-amz-request-id error");
-			
-		}
-
-
-
-		
-		return 1;
 	}
+	else
+	{
+		if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
+			err_sys("post_bucket_header_yes MHD_add_response_header Connection error");
+	}
+
+		
+	header_add = MHD_get_response_header (response,"Server"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+						
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"Store B409",strlen("Store B409")+1);
+						
+	}
+	else
+	{
+		f(MHD_add_response_header(response,"Server", "Store B409")==0)
+			err_sys("post_bucket_header_yes MHD_add_response_header Server error");
+			
+	}
+
+	header_add = MHD_get_response_header (response,"x-amz-id-2"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+						
+		/err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80",strlen("JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80")+1);
+						
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"x-amz-id-2", "JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80")==0)
+			err_sys("post_bucket_header_yes MHD_add_response_header x-amz-id-2 error");
+			
+	}
+
+	header_add = MHD_get_response_header (response,"x-amz-request-id"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+						
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"32FE2CEB32F5EE25",strlen("32FE2CEB32F5EE25")+1);
+						
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"x-amz-request-id", "32FE2CEB32F5EE25")==0)
+			err_sys("post_bucket_header_yes MHD_add_response_header x-amz-request-id error");
+			
+	}
+
+	return 1;
+}
 
 int put_send_page (struct MHD_Connection *connection, const char *page,int status_code)
+{
+	int ret;
+	struct MHD_Response *response;
+	sender_head send_header;
+	response = MHD_create_response_from_buffer (strlen (page), (void *) page,MHD_RESPMEM_PERSISTENT);
+	if (!response)
 	{
-		int ret;
-		struct MHD_Response *response;
-		sender_head send_header;
-		response =
-		MHD_create_response_from_buffer (strlen (page), (void *) page,MHD_RESPMEM_PERSISTENT);
-		if (!response)
-		{
-			perror("send_page MHD_create_response_from_buffer");
-			return MHD_NO;
-		}
-		post_object_header(response,send_header);
-		MHD_queue_response (connection, status_code, response);
-		ret=MHD_queue_response (connection, MHD_HTTP_CONTINUE, response);
-		MHD_destroy_response (response);
-		return ret;
+		perror("send_page MHD_create_response_from_buffer");
+		return MHD_NO;
 	}
+	post_object_header(response,send_header);
+	MHD_queue_response (connection, status_code, response);
+	ret=MHD_queue_response (connection, MHD_HTTP_CONTINUE, response);
+	MHD_destroy_response (response);
+	return ret;
+}
 
 
 int iterate_put (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,const char *filename, const char *content_type,const char *transfer_encoding, const char *data, uint64_t off,size_t size)
+{
+	struct connection_info_struct *con_info = coninfo_cls;
+	FILE *fp;
+	con_info->answerstring = servererrorpage;
+	con_info->answercode = MHD_HTTP_INTERNAL_SERVER_ERROR;
+	if (0 != strcmp (key, "file"))
+		return MHD_NO;
+	if (!con_info->fp)
 	{
-		struct connection_info_struct *con_info = coninfo_cls;
-		FILE *fp;
-		con_info->answerstring = servererrorpage;
-		con_info->answercode = MHD_HTTP_INTERNAL_SERVER_ERROR;
-		if (0 != strcmp (key, "file"))
-			return MHD_NO;
-		if (!con_info->fp)
-		{
 
-			if (NULL != (fp = fopen (filename, "rb")))
-			{
-				fclose (fp);
-				con_info->answerstring = fileexistspage;
-				con_info->answercode = MHD_HTTP_FORBIDDEN;
-				return MHD_NO;
-			}
-			con_info->fp = fopen (filename, "ab");
-			if (!con_info->fp)
-			return MHD_NO;
-		}
-		if (size > 0)
+		if (NULL != (fp = fopen (filename, "rb")))
 		{
-			if (!fwrite (data, size, sizeof (char), con_info->fp))
+			fclose (fp);
+			con_info->answerstring = fileexistspage;
+			con_info->answercode = MHD_HTTP_FORBIDDEN;
 			return MHD_NO;
 		}
-		con_info->answerstring = completepage;
-		con_info->answercode = MHD_HTTP_OK;
-		return MHD_YES;
+		con_info->fp = fopen (filename, "ab");
+		if (!con_info->fp)
+			return MHD_NO;
 	}
+	if (size > 0)
+	{
+		if (!fwrite (data, size, sizeof (char), con_info->fp))
+		return MHD_NO;
+	}
+	con_info->answerstring = completepage;
+	con_info->answercode = MHD_HTTP_OK;
+	return MHD_YES;
+}
 
 
 
 void put_request_completed (void *cls, struct MHD_Connection *connection,void **con_cls, enum MHD_RequestTerminationCode toe)
-	{
-		struct connection_info_struct *con_info = *con_cls;
-		if (NULL == con_info)
+{
+	struct connection_info_struct *con_info = *con_cls;
+	if (NULL == con_info)
 		return;
-		if (con_info->connectiontype == POST)
+	if (con_info->connectiontype == POST)
+	{
+		if (NULL != con_info->postprocessor)
 		{
-			if (NULL != con_info->postprocessor)
-			{
-				MHD_destroy_post_processor (con_info->postprocessor);
-				//nr_of_uploading_clients--;
-			}
-			if (con_info->fp)
-				fclose (con_info->fp);
+			MHD_destroy_post_processor (con_info->postprocessor);
+			//nr_of_uploading_clients--;
 		}
-		free (con_info);
-		*con_cls = NULL;
+		if (con_info->fp)
+			fclose (con_info->fp);
 	}
+	free (con_info);
+		*con_cls = NULL;
+}
 
 
 int post_send_page (struct MHD_Connection *connection, const char *page,int status_code)
+{
+	int ret;
+	struct MHD_Response *response;
+	sender_head send_header;
+	response = MHD_create_response_from_buffer (strlen (page), (void *) page,MHD_RESPMEM_PERSISTENT);
+	if (!response)
 	{
-		int ret;
-		struct MHD_Response *response;
-		sender_head send_header;
-		response =
-		MHD_create_response_from_buffer (strlen (page), (void *) page,MHD_RESPMEM_PERSISTENT);
-		if (!response)
-		{
-			perror("post_send_page MHD_create_response_from_buffer");
-			return MHD_NO;
-		}
-		post_object_header(response,send_header);
-		MHD_queue_response (connection, status_code, response);
-		ret=MHD_queue_response (connection, MHD_HTTP_CONTINUE, response);
-		MHD_destroy_response (response);
-		return ret;
+		perror("post_send_page MHD_create_response_from_buffer");
+		return MHD_NO;
 	}
-//**********************************************
-/*
-int iterate_post(void *coninfo_cls, enum MHD_ValueKind kind, const char *key,const char *filename, const char *content_type,const char *transfer_encoding, const char *data, uint64_t off,size_t size)
-	{
-		struct connection_info_struct *con_info = coninfo_cls;
-		FILE *fp;
-		con_info->answerstring = servererrorpage;
-		con_info->answercode = MHD_HTTP_INTERNAL_SERVER_ERROR;
-		if (0 != strcmp (key, "file"))
-			return MHD_NO;
-		if (!con_info->fp)
-		{
+	post_object_header(response,send_header);
+	MHD_queue_response (connection, status_code, response);
+	ret=MHD_queue_response (connection, MHD_HTTP_CONTINUE, response);
+	MHD_destroy_response (response);
+	return ret;
+}
 
-			if (NULL != (fp = fopen (filename, "rb")))
-			{
-				fclose (fp);
-				con_info->answerstring = fileexistspage;
-				con_info->answercode = MHD_HTTP_FORBIDDEN;
-				return MHD_NO;
-			}
-			con_info->fp = fopen (filename, "ab");
-			if (!con_info->fp)
-			return MHD_NO;
-		}
-		if (size > 0)
-		{
-			if (!fwrite (data, size, sizeof (char), con_info->fp))
-			return MHD_NO;
-		}
-		con_info->answerstring = completepage;
-		con_info->answercode = MHD_HTTP_OK;
-		return MHD_YES;
-	}
-
-*/
-//*********************************************************
 void post_request_completed (void *cls, struct MHD_Connection *connection,void **con_cls, enum MHD_RequestTerminationCode toe)
-	{
-		struct connection_info_struct *con_info = *con_cls;
-		if (NULL == con_info)
+{
+	struct connection_info_struct *con_info = *con_cls;
+	if (NULL == con_info)
 		return;
-		if (con_info->connectiontype == POST)
+	if (con_info->connectiontype == POST)
+	{
+		if (NULL != con_info->postprocessor)
 		{
-			if (NULL != con_info->postprocessor)
-			{
-				MHD_destroy_post_processor (con_info->postprocessor);
-				//nr_of_uploading_clients--;
-			}
-			if (con_info->fp)
-				fclose (con_info->fp);
+			MHD_destroy_post_processor (con_info->postprocessor);
+			//nr_of_uploading_clients--;
 		}
-		free (con_info);
-		*con_cls = NULL;
+		if (con_info->fp)
+			fclose (con_info->fp);
 	}
+	free (con_info);
+	*con_cls = NULL;
+}
 //************************************************************************
 //************************************************************************
 
@@ -1420,19 +1365,17 @@ void post_request_completed (void *cls, struct MHD_Connection *connection,void *
 send_page (struct MHD_Connection *connection, const char *page,
            int status_code)
 {
-  int ret;
-  struct MHD_Response *response;
+	int ret;
+ 	struct MHD_Response *response;
 
-  response =
-    MHD_create_response_from_buffer (strlen (page), (void *) page,
-				     MHD_RESPMEM_MUST_COPY);
-  if (!response)
-    return MHD_NO;
-  MHD_add_response_header (response, MHD_HTTP_HEADER_CONTENT_TYPE, "text/html");
-  ret = MHD_queue_response (connection, status_code, response);
-  MHD_destroy_response (response);
+	response = MHD_create_response_from_buffer (strlen (page), (void *) page,MHD_RESPMEM_MUST_COPY);
+	if (!response)
+    		return MHD_NO;
+  	MHD_add_response_header (response, MHD_HTTP_HEADER_CONTENT_TYPE, "text/html");
+  	ret = MHD_queue_response (connection, status_code, response);
+  	MHD_destroy_response (response);
 
-  return ret;
+  	return ret;
 }
 
 
@@ -1442,52 +1385,37 @@ iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
               const char *transfer_encoding, const char *data, uint64_t off,
               size_t size)
 {
-  struct connection_info_struct *con_info = coninfo_cls;
-  FILE *fp;
+	struct connection_info_struct *con_info = coninfo_cls;
+  	FILE *fp;
 
+	con_info->answerstring = servererrorpage;
+	con_info->answercode = MHD_HTTP_INTERNAL_SERVER_ERROR;
 
-	printf("now %%%%%%%%%%%%%%%%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&%&%&%55555t!\n");
-	printf("the filename is : %s\n",filename);
-	printf("now in iterate_post!\n");
-//	printf("the data is : %s\n",data);
-	printf("the data size is %d \n",size);
-	printf("the transfer_encoding  is %s \n",transfer_encoding);
-	
-  con_info->answerstring = servererrorpage;
-  con_info->answercode = MHD_HTTP_INTERNAL_SERVER_ERROR;
-/*
-  if (0 != strcmp (key, "file"))
-{
-	printf(" key is not file! quit out! \n");
-    return MHD_NO;
-}
+	if (!con_info->fp)
+ 	{
+ 		if (NULL != (fp = fopen (filename, "rb")))
+		{
+			fclose (fp);
+			con_info->answerstring = fileexistspage;
+			con_info->answercode = MHD_HTTP_FORBIDDEN;
+          		return MHD_NO;
+ 		}
 
-*/
-  if (!con_info->fp)
-    {
-      if (NULL != (fp = fopen (filename, "rb")))
-        {
-          fclose (fp);
-          con_info->answerstring = fileexistspage;
-          con_info->answercode = MHD_HTTP_FORBIDDEN;
-          return MHD_NO;
-        }
+      	con_info->fp = fopen (filename, "ab");
+ 	if (!con_info->fp)
+        	return MHD_NO;
+	}
 
-      con_info->fp = fopen (filename, "ab");
-      if (!con_info->fp)
-        return MHD_NO;
-    }
+  	if (size > 0)
+    	{
+      		if (!fwrite (data, size, sizeof (char), con_info->fp))
+		   	return MHD_NO;
+    	}
 
-  if (size > 0)
-    {
-      if (!fwrite (data, size, sizeof (char), con_info->fp))
-        return MHD_NO;
-    }
+  	con_info->answerstring = completepage;
+  	con_info->answercode = MHD_HTTP_OK;
 
-  con_info->answerstring = completepage;
-  con_info->answercode = MHD_HTTP_OK;
-
-  return MHD_YES;
+  	return MHD_YES;
 }
 
 
@@ -1495,25 +1423,25 @@ void
 request_completed (void *cls, struct MHD_Connection *connection,
                    void **con_cls, enum MHD_RequestTerminationCode toe)
 {
-  struct connection_info_struct *con_info = *con_cls;
+  	struct connection_info_struct *con_info = *con_cls;
 
-  if (NULL == con_info)
-    return;
+  	if (NULL == con_info)
+    		return;
 
-  if (con_info->connectiontype == POST)
-    {
-      if (NULL != con_info->postprocessor)
-        {
-          MHD_destroy_post_processor (con_info->postprocessor);
-          nr_of_uploading_clients--;
-        }
+  	if (con_info->connectiontype == POST)
+    	{
+      		if (NULL != con_info->postprocessor)
+        	{
+          		MHD_destroy_post_processor (con_info->postprocessor);
+          		nr_of_uploading_clients--;
+        	}
 
-      if (con_info->fp)
-        fclose (con_info->fp);
-    }
+      		if (con_info->fp)
+        		fclose (con_info->fp);
+    	}
 
-  free (con_info);
-  *con_cls = NULL;
+	free (con_info);
+	*con_cls = NULL;
 }
 
 
@@ -1530,7 +1458,7 @@ int Gen_Date(char *date)
         {
                 printf("%.24s\r\n",ctime(calptr));
                 tmptr=gmtime(calptr);
-		  // date=(char*)malloc(128*sizeof(char));
+		// date=(char*)malloc(128*sizeof(char));
 		if(date==NULL)
 		{
 			printf("1297 line date is NULL!quit\n");
@@ -1546,7 +1474,7 @@ int Gen_Date(char *date)
             		return 0;
                 }
 		printf(" date is %s \n",date);             
-           //return buf;
+           	//return buf;
         }
 	free(calptr);
 	return 1;
@@ -1569,12 +1497,12 @@ int Tran_Date(time_t time,char *date)
 	struct tm *tmptr;	
 	tmptr=gmtime(&time);
        	if( strftime(date,BUFLENGTH,"%a,%e %b %Y %X %Z",tmptr)==0)
-       	{
-                	//puts(date);
-                        err_sys("strftime error\n");
+	{
+               	//puts(date);
+		err_sys("strftime error\n");
             		return 0;
-          }
-          else return 1;              //return buf;
+        }
+        else return 1;              //return buf;
  }
 
 
