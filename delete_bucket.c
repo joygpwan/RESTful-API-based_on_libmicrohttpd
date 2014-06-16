@@ -1,80 +1,82 @@
+/*
+ * Copyright (C) Guangping Wan (joygpwan)
+ */
+ 
 #include "delete_bucket.h"
 
 
-
-
 bool is_dir(const char *path)
+{
+	struct stat statbuf;
+	if(lstat(path, &statbuf) ==0)//lstatï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½statï¿½á¹¹ï¿½ï¿½
 	{
-		struct stat statbuf;
-		if(lstat(path, &statbuf) ==0)//lstat·µ»ØÎÄ¼þµÄÐÅÏ¢£¬ÎÄ¼þÐÅÏ¢´æ·ÅÔÚstat½á¹¹ÖÐ
-		{
-			return S_ISDIR(statbuf.st_mode) != 0;//S_ISDIRºê£¬ÅÐ¶ÏÎÄ¼þÀàÐÍÊÇ·ñÎªÄ¿Â¼
-		}
-		return false;
+		return S_ISDIR(statbuf.st_mode) != 0;//S_ISDIRï¿½ê£¬ï¿½Ð¶ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ÎªÄ¿Â¼
 	}
+	return false;
+}
 	
-	//ÅÐ¶ÏÊÇ·ñÎª³£¹æÎÄ¼þ
-	bool is_file(const char *path)
+	//ï¿½Ð¶ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+bool is_file(const char *path)
+{
+	struct stat statbuf;
+	if(lstat(path, &statbuf) ==0)
+		return S_ISREG(statbuf.st_mode) != 0;//ï¿½Ð¶ï¿½ï¿½Ä¼ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+	return false;
+}
+	
+	//ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Â¼
+bool is_special_dir(const char *path)
+{
+	return strcmp(path, ".") == 0 || strcmp(path, "..") == 0;
+}
+	
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Â·ï¿½ï¿½
+void get_file_path(const char *path, const char *file_name,  char *file_path)
+{
+	strcpy(file_path, path);
+	if(file_path[strlen(path) - 1] != '/')
+		strcat(file_path, "/");
+	strcat(file_path, file_name);
+}
+	
+void delete_file(const char *path)
+{
+	DIR *dir;
+	struct dirent *dir_info;
+	char file_path[PATH_MAX];
+	if(is_file(path))
 	{
-		struct stat statbuf;
-		if(lstat(path, &statbuf) ==0)
-			return S_ISREG(statbuf.st_mode) != 0;//ÅÐ¶ÏÎÄ¼þÊÇ·ñÎª³£¹æÎÄ¼þ
-		return false;
+		remove(path);
+		return;
 	}
-	
-	//ÅÐ¶ÏÊÇ·ñÊÇÌØÊâÄ¿Â¼
-	bool is_special_dir(const char *path)
+	if(is_dir(path))
 	{
-		return strcmp(path, ".") == 0 || strcmp(path, "..") == 0;
-	}
-	
-	//Éú³ÉÍêÕûµÄÎÄ¼þÂ·¾¶
-	void get_file_path(const char *path, const char *file_name,  char *file_path)
-	{
-		strcpy(file_path, path);
-		if(file_path[strlen(path) - 1] != '/')
-			strcat(file_path, "/");
-		strcat(file_path, file_name);
-	}
-	
-	void delete_file(const char *path)
-	{
-		DIR *dir;
-		struct dirent *dir_info;
-		char file_path[PATH_MAX];
-		if(is_file(path))
-		{
-			remove(path);
+		if((dir = opendir(path)) == NULL)
 			return;
-		}
-		if(is_dir(path))
+		while((dir_info = readdir(dir)) != NULL)
 		{
-			if((dir = opendir(path)) == NULL)
-				return;
-			while((dir_info = readdir(dir)) != NULL)
-			{
-				get_file_path(path, dir_info->d_name, file_path);
-				if(is_special_dir(dir_info->d_name))
-					continue;
-				delete_file(file_path);
-				rmdir(file_path);
-			}
+			get_file_path(path, dir_info->d_name, file_path);
+			if(is_special_dir(dir_info->d_name))
+				continue;
+			delete_file(file_path);
+			rmdir(file_path);
 		}
-	
 	}
+	
+}
 
 int delete_dir(const char *path)
+{
+	if(rmdir(path)==0)
 	{
-			if(rmdir(path)==0)
-			{
-				printf("Delete success!\n");
-				return 1;
-			}
-			else 
-			{
-				printf("\n Delete failed\n");
-   				return 0;
-			}
-		
+		printf("Delete success!\n");
+			return 1;
 	}
+	else 
+	{
+		printf("\n Delete failed\n");
+   		return 0;
+	}
+		
+}
 
