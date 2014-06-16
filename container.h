@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) Guangping Wan (joygpwan)
+ */
+ 
+
 #ifndef CONTAINER_H
 #define CONTAINER_H
 
@@ -13,7 +18,8 @@
 #define PORT 8888
 
 
-typedef struct sender_head{
+typedef struct sender_head
+{
 	char Connection[16];
 	char Pathname[128];
 }sender_head;
