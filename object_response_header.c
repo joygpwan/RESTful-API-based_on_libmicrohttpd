@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) Guangping Wan (joygpwan)
+ */
+
+
 #include "object_response_header.h"
 #include "request_analysis.h"
 #include "container.h"
@@ -41,16 +46,16 @@ int get_object_header_yes(struct MHD_Response *response,struct sender_head send_
 
 	header_add = MHD_get_response_header (response,"Last-Modified");	
 	if(stat(send_header.Pathname,&buf)<0)
-			err_sys("get_object_header_yes stat 90 line error");
+		err_sys("get_object_header_yes stat 90 line error");
 	else
 	{
-			 if(Tran_Date(buf.st_mtime,temp)==0)
-			 	err_sys("get_object_header_yes Tran_Date error");
+		if(Tran_Date(buf.st_mtime,temp)==0)
+			err_sys("get_object_header_yes Tran_Date error");
 	}
 
 	if (header_add != NULL)
 	{
-		 strncpy(header_add,temp,strlen(temp)+1);
+		strncpy(header_add,temp,strlen(temp)+1);
 			
 	}
 	else
@@ -66,9 +71,9 @@ int get_object_header_yes(struct MHD_Response *response,struct sender_head send_
 	if (header_add != NULL)
 	{
 			
-			 	//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,temp,strlen(temp)+1);
-			printf("*********117 line size is %s\n",temp);	
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,temp,strlen(temp)+1);
+		printf("*********117 line size is %s\n",temp);	
 	}
 	else
 	{
@@ -93,72 +98,71 @@ int get_object_header_yes(struct MHD_Response *response,struct sender_head send_
 
 	}
 
-		header_add = MHD_get_response_header (response,"Connection");	
-			// ltoa(buf.st_size,temp,10);
-			if (header_add != NULL)
-			{
+	header_add = MHD_get_response_header (response,"Connection");	
+	// ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
 					
-						//err_sys("get_object_header_yes Tran_Date error");
-					 strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
 					
-			}
-			else
-			{
-				if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
-					err_sys("get_object_header_yes MHD_add_response_header Connection error");
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
+			err_sys("get_object_header_yes MHD_add_response_header Connection error");
 		
-			}
+	}
 
 
 	
     	header_add = MHD_get_response_header (response,"Content-Type");	
-		//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
 				
-					//err_sys("get_object_header_yes Tran_Date error");
-				 strncpy(header_add,"text/plain",strlen("text/plain")+1);
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"text/plain",strlen("text/plain")+1);
 				
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"Content-Type", "text/plain")==0)
-				err_sys("get_object_header_yes MHD_add_response_header Content-Length error");
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"Content-Type", "text/plain")==0)
+			err_sys("get_object_header_yes MHD_add_response_header Content-Length error");
 	
-		}
+	}
 
 		
-		header_add = MHD_get_response_header (response,"Server"); 
+	header_add = MHD_get_response_header (response,"Server"); 
 				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
+	if (header_add != NULL)
+	{
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"Store B409",strlen("Store B409")+1);
 						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"Store B409",strlen("Store B409")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"Server", "Store B409")==0)
-				err_sys("get_object_header_yes MHD_add_response_header Content-Length error");
-			
-		}
-		
-		return 1;
 	}
+	else
+	{
+		if(MHD_add_response_header(response,"Server", "Store B409")==0)
+			err_sys("get_object_header_yes MHD_add_response_header Content-Length error");
+			
+	}
+		
+	return 1;
+}
 
 
 
 int get_object_header_no(struct MHD_Response *response,struct sender_head send_header)
 {
-/*    GET ¶ÔÏó²»´æÔÚ */
+	/*    GET ï¿½ï¿½ï¿½ó²»´ï¿½ï¿½ï¿½ */
 
 	char *header_add;
 	struct stat buf;
 	char *temp,*date;
 	temp=(char *)malloc(BUFLENGTH*sizeof(char));
 	//header_add=(char *)malloc(BUFLENGTH*sizeof(char));
-//*******************************NEW CODE******************
+	//*******************************NEW CODE******************
 
 	date=(char *)malloc(BUFLENGTH*sizeof(char));
 	//header_add=(char *)malloc(BUFLENGTH*sizeof(char));
@@ -189,49 +193,43 @@ int get_object_header_no(struct MHD_Response *response,struct sender_head send_h
 
 	}
 
-		header_add = MHD_get_response_header (response,"Connection");	
+	header_add = MHD_get_response_header (response,"Connection");	
 
-
-			// ltoa(buf.st_size,temp,10);
-			if (header_add != NULL)
-			{
+	// ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
 					
-						//err_sys("get_object_header_yes Tran_Date error");
-					 strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
 					
-			}
-			else
-			{
-				if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
-					err_sys("get_object_header_no MHD_add_response_header Connection error");
-		
-			}
-
-		if(MHD_add_response_header(response,"Server", "Store B409")==0)
-				err_sys("get_object_header_no MHD_add_response_header Content-Length error");
-			
-	
-		
-
-	
-		header_add = MHD_get_response_header (response,"Server"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_no Tran_Date error");
-			 strncpy(header_add,"Store B409",strlen("Store B409")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"x-amz-delete-marker", "TRUE")==0)
-				err_sys("get_object_header_no MHD_add_response_header x-amz-delete-marker error");
-			
-		}
-		
-		return 1;
 	}
+	else
+	{
+		if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
+			err_sys("get_object_header_no MHD_add_response_header Connection error");
+		
+	}
+
+	if(MHD_add_response_header(response,"Server", "Store B409")==0)
+		err_sys("get_object_header_no MHD_add_response_header Content-Length error");
+	
+	header_add = MHD_get_response_header (response,"Server"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+		//err_sys("get_object_header_no Tran_Date error");
+		strncpy(header_add,"Store B409",strlen("Store B409")+1);
+						
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"x-amz-delete-marker", "TRUE")==0)
+			err_sys("get_object_header_no MHD_add_response_header x-amz-delete-marker error");
+			
+	}
+		
+	return 1;
+}
 
 
 
@@ -239,7 +237,7 @@ int get_object_header_no(struct MHD_Response *response,struct sender_head send_h
 int head_object_header_yes(struct MHD_Response *response,struct sender_head send_header)
 {
 
-     /*     GET ¶ÔÏó´æÔÚ  */
+	/*     GET ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  */
 
 	char *header_add,*temp,*date;
 	struct stat buf;
@@ -277,16 +275,16 @@ int head_object_header_yes(struct MHD_Response *response,struct sender_head send
 
 	header_add = MHD_get_response_header (response,"Last-Modified");	
 	if(stat(send_header.Pathname,&buf)<0)
-			err_sys("head_object_header_yes stat error");
+		err_sys("head_object_header_yes stat error");
 	else
 	{
-			 if(Tran_Date(buf.st_mtime,temp)==0)
-			 	err_sys("head_object_header_yes Tran_Date error");
+		if(Tran_Date(buf.st_mtime,temp)==0)
+			err_sys("head_object_header_yes Tran_Date error");
 	}
 
 	if (header_add != NULL)
 	{
-		 strncpy(header_add,temp,strlen(temp)+1);
+		strncpy(header_add,temp,strlen(temp)+1);
 			
 	}
 	else
@@ -302,8 +300,8 @@ int head_object_header_yes(struct MHD_Response *response,struct sender_head send
 	if (header_add != NULL)
 	{
 			
-			 	//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,temp,strlen(temp)+1);
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,temp,strlen(temp)+1);
 			
 	}
 	else
@@ -328,66 +326,60 @@ int head_object_header_yes(struct MHD_Response *response,struct sender_head send
 
 	}
 
-		header_add = MHD_get_response_header (response,"Connection");	
-			// ltoa(buf.st_size,temp,10);
-			if (header_add != NULL)
-			{
+	header_add = MHD_get_response_header (response,"Connection");	
+	// ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
 					
-						//err_sys("get_object_header_yes Tran_Date error");
-					 strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
 					
-			}
-			else
-			{
-				if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
-					err_sys("head_object_header_yes MHD_add_response_header Connection error");
-		
-			}
-
-
-	
-    	header_add = MHD_get_response_header (response,"Content-Type");	
-		//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-				
-					//err_sys("get_object_header_yes Tran_Date error");
-				 strncpy(header_add,"text/plain",strlen("text/plain")+1);
-				
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"Content-Length", "text/plain")==0)
-				err_sys("head_object_header_yes MHD_add_response_header Content-Length error");
-	
-		}
-
-		
-		header_add = MHD_get_response_header (response,"Server"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"Store B409",strlen("Store B409")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"Server", "Store B409")==0)
-				err_sys("head_object_header_yes MHD_add_response_header Content-Length error");
-			
-		}
-		
-		return 1;
 	}
+	else
+	{
+		if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
+			err_sys("head_object_header_yes MHD_add_response_header Connection error");
+	}
+
+
+    	header_add = MHD_get_response_header (response,"Content-Type");	
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"text/plain",strlen("text/plain")+1);
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"Content-Length", "text/plain")==0)
+			err_sys("head_object_header_yes MHD_add_response_header Content-Length error");
+	
+	}
+	header_add = MHD_get_response_header (response,"Server"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+						
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"Store B409",strlen("Store B409")+1);
+						
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"Server", "Store B409")==0)
+			err_sys("head_object_header_yes MHD_add_response_header Content-Length error");
+			
+	}
+		
+	return 1;
+}
 
 
 
 
 int head_object_header_no(struct MHD_Response *response,struct sender_head send_header)
 {
-/*    GET ¶ÔÏó²»´æÔÚ */
+	/*    GET ï¿½ï¿½ï¿½ó²»´ï¿½ï¿½ï¿½ */
 
 	char *header_add;
 	struct stat buf;
@@ -412,36 +404,33 @@ int head_object_header_no(struct MHD_Response *response,struct sender_head send_
 	}
 
 		header_add = MHD_get_response_header (response,"Connection");	
-			// ltoa(buf.st_size,temp,10);
-			if (header_add != NULL)
-			{
+		// ltoa(buf.st_size,temp,10);
+		if (header_add != NULL)
+		{
 					
-						//err_sys("get_object_header_yes Tran_Date error");
-					 strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
+			//err_sys("get_object_header_yes Tran_Date error");
+			strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
 					
-			}
-			else
-			{
-				if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
-					err_sys("head_object_header_no MHD_add_response_header Connection error");
+		}
+		else
+		{
+			if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
+				err_sys("head_object_header_no MHD_add_response_header Connection error");
 		
-			}
+		}
 
 
 		if(MHD_add_response_header(response,"Server", "Store B409")==0)
-				err_sys("head_object_header_no MHD_add_response_header Content-Length error");
+			err_sys("head_object_header_no MHD_add_response_header Content-Length error");
 			
 	
-		
-
-	
 		header_add = MHD_get_response_header (response,"Server"); 
-				//ltoa(buf.st_size,temp,10);
+		//ltoa(buf.st_size,temp,10);
 		if (header_add != NULL)
 		{
 						
-							//err_sys("get_object_header_no Tran_Date error");
-			 strncpy(header_add,"Store B409",strlen("Store B409")+1);
+			//err_sys("get_object_header_no Tran_Date error");
+			strncpy(header_add,"Store B409",strlen("Store B409")+1);
 						
 		}
 		else
@@ -458,9 +447,7 @@ int head_object_header_no(struct MHD_Response *response,struct sender_head send_
 int post_object_header(struct MHD_Response *response,struct sender_head send_header)
 {
 
-
-
-     /*     GET ¶ÔÏó´æÔÚ  */
+	/*     GET ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  */
 
 	char *header_add;
 	struct stat buf;
@@ -485,10 +472,6 @@ int post_object_header(struct MHD_Response *response,struct sender_head send_hea
 	}
 	
 
-	
-
-
-
 	header_add = MHD_get_response_header (response,"ETag");	
 	if (header_add != NULL)
 	{
@@ -503,65 +486,64 @@ int post_object_header(struct MHD_Response *response,struct sender_head send_hea
 
 	}
 
-		header_add = MHD_get_response_header (response,"Connection");	
-			// ltoa(buf.st_size,temp,10);
-			if (header_add != NULL)
-			{
+	header_add = MHD_get_response_header (response,"Connection");	
+	// ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
 					
-						//err_sys("get_object_header_yes Tran_Date error");
-					 strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
 					
-			}
-			else
-			{
-				if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
-					err_sys("post_object_header_yes MHD_add_response_header Connection error");
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
+			err_sys("post_object_header_yes MHD_add_response_header Connection error");
 		
-			}
-
+	}
 
 	
     	header_add = MHD_get_response_header (response,"Content-Type");	
-		//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
 				
-					//err_sys("get_object_header_yes Tran_Date error");
-				 strncpy(header_add,"text/plain",strlen("text/plain")+1);
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"text/plain",strlen("text/plain")+1);
 				
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"Content-Length", "text/plain")==0)
-				err_sys("post_object_header_yes MHD_add_response_header Content-Length error");
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"Content-Length", "text/plain")==0)
+			err_sys("post_object_header_yes MHD_add_response_header Content-Length error");
 	
-		}
+	}
 
 		
-		header_add = MHD_get_response_header (response,"Server"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
+	header_add = MHD_get_response_header (response,"Server"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
 						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"Store B409",strlen("Store B409")+1);
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"Store B409",strlen("Store B409")+1);
 						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"Server", "Store B409")==0)
-				err_sys("post_object_header_yes MHD_add_response_header Content-Length error");
-			
-		}
-		
-		return 1;
 	}
+	else
+	{
+		if(MHD_add_response_header(response,"Server", "Store B409")==0)
+			err_sys("post_object_header_yes MHD_add_response_header Content-Length error");
+			
+	}
+		
+	return 1;
+}
 
 
 int delete_object_header_yes(struct MHD_Response *response,struct sender_head send_header)
 {
 
-     char *header_add,*temp,*date;
+	char *header_add,*temp,*date;
 	struct stat buf;
 	temp=(char *)malloc(BUFLENGTH*sizeof(char));
 	date=(char *)malloc(BUFLENGTH*sizeof(char));
@@ -600,7 +582,7 @@ int delete_object_header_yes(struct MHD_Response *response,struct sender_head se
 	{
 			
 			 	
-			 strncpy(header_add,temp,strlen(temp)+1);
+		strncpy(header_add,temp,strlen(temp)+1);
 			
 	}
 	else
@@ -625,44 +607,37 @@ int delete_object_header_yes(struct MHD_Response *response,struct sender_head se
 
 	}
 
-		header_add = MHD_get_response_header (response,"Connection");	
-			// ltoa(buf.st_size,temp,10);
-			if (header_add != NULL)
-			{
+	header_add = MHD_get_response_header (response,"Connection");	
+	// ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
 					
-						//err_sys("get_object_header_yes Tran_Date error");
-					 strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
 					
-			}
-			else
-			{
-				if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
-					err_sys("delete_object_header_yes MHD_add_response_header Connection error");
-		
-			}
-
-
-	
-   
-		
-		header_add = MHD_get_response_header (response,"Server"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"Store B409",strlen("Store B409")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"Server", "Store B409")==0)
-				err_sys("delete_object_header_yes MHD_add_response_header Content-Length error");
-			
-		}
-		
-		return 1;
 	}
+	else
+	{
+		if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
+			err_sys("delete_object_header_yes MHD_add_response_header Connection error");
+		
+	}
+	header_add = MHD_get_response_header (response,"Server"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"Store B409",strlen("Store B409")+1);
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"Server", "Store B409")==0)
+			err_sys("delete_object_header_yes MHD_add_response_header Content-Length error");
+			
+	}
+		
+	return 1;
+}
 
 
 
@@ -670,7 +645,7 @@ int delete_object_header_yes(struct MHD_Response *response,struct sender_head se
 int delete_bucket_header_yes(struct MHD_Response *response,struct sender_head send_header)
 {
 
-     char *header_add,*temp,*date;
+	char *header_add,*temp,*date;
 	struct stat buf;
 	temp=(char *)malloc(BUFLENGTH*sizeof(char));
 	date=(char *)malloc(BUFLENGTH*sizeof(char));
@@ -688,8 +663,6 @@ int delete_bucket_header_yes(struct MHD_Response *response,struct sender_head se
 
 	else
 	{
-
-
 		//if(Gen_Date(header_add)==0)
 		if(Gen_Date(date)==0)
 
@@ -707,48 +680,41 @@ int delete_bucket_header_yes(struct MHD_Response *response,struct sender_head se
 	}
 
 
-
-	
-
-
-		header_add = MHD_get_response_header (response,"Connection");	
-			// ltoa(buf.st_size,temp,10);
-			if (header_add != NULL)
-			{
+	header_add = MHD_get_response_header (response,"Connection");	
+	// ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
 					
-						//err_sys("get_object_header_yes Tran_Date error");
-					 strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
 					
-			}
-			else
-			{
-				if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
-					err_sys("delete_bucket_header_yes MHD_add_response_header Connection error");
-		
-			}
-
-
-	
-   
-		
-		header_add = MHD_get_response_header (response,"Server"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"Store B409",strlen("Store B409")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"Server", "Store B409")==0)
-				err_sys("delete_bucket_header_yes MHD_add_response_header Content-Length error");
-			
-		}
-		
-		return 1;
 	}
+	else
+	{
+		if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
+			err_sys("delete_bucket_header_yes MHD_add_response_header Connection error");
+		
+	}
+
+		
+	header_add = MHD_get_response_header (response,"Server"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+						
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"Store B409",strlen("Store B409")+1);
+						
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"Server", "Store B409")==0)
+			err_sys("delete_bucket_header_yes MHD_add_response_header Content-Length error");
+			
+	}
+		
+	return 1;
+}
 
 
 
@@ -758,7 +724,7 @@ int head_bucket_header_yes(struct MHD_Response *response,struct sender_head send
 {
 
 	
-		char *header_add,*temp,*date;
+	char *header_add,*temp,*date;
 	struct stat buf;
 	temp=(char *)malloc(BUFLENGTH*sizeof(char));
 	date=(char *)malloc(BUFLENGTH*sizeof(char));
@@ -789,83 +755,74 @@ int head_bucket_header_yes(struct MHD_Response *response,struct sender_head send
 		}
 	}
 
-		header_add = MHD_get_response_header (response,"Connection");	
-			// ltoa(buf.st_size,temp,10);
-			if (header_add != NULL)
-			{
+	header_add = MHD_get_response_header (response,"Connection");	
+	// ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
 					
-						//err_sys("get_object_header_yes Tran_Date error");
-					 strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
 					
-			}
-			else
-			{
-				if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
-					err_sys("head_object_header_yes MHD_add_response_header Connection error");
-		
-			}
-
-
-	
-   
-		
-		header_add = MHD_get_response_header (response,"Server"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"Store B409",strlen("Store B409")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"Server", "Store B409")==0)
-				err_sys("head_object_header_yes MHD_add_response_header Server error");
-			
-		}
-
-
-
-		header_add = MHD_get_response_header (response,"x-amz-id-2"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80",strlen("JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"x-amz-id-2", "JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80")==0)
-				err_sys("head_object_header_yes MHD_add_response_header x-amz-id-2 error");
-			
-		}
-
-
-
-		header_add = MHD_get_response_header (response,"x-amz-request-id"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"32FE2CEB32F5EE25",strlen("32FE2CEB32F5EE25")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"x-amz-request-id", "32FE2CEB32F5EE25")==0)
-				err_sys("head_object_header_yes MHD_add_response_header x-amz-request-id error");
-			
-		}
-
-
-
-		
-		return 1;
 	}
+	else
+	{
+		if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
+			err_sys("head_object_header_yes MHD_add_response_header Connection error");
+		
+	}
+		
+	header_add = MHD_get_response_header (response,"Server"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+						
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"Store B409",strlen("Store B409")+1);
+						
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"Server", "Store B409")==0)
+			err_sys("head_object_header_yes MHD_add_response_header Server error");
+			
+	}
+
+	header_add = MHD_get_response_header (response,"x-amz-id-2"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+						
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80",strlen("JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80")+1);
+						
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"x-amz-id-2", "JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80")==0)
+			err_sys("head_object_header_yes MHD_add_response_header x-amz-id-2 error");
+			
+	}
+
+
+
+	header_add = MHD_get_response_header (response,"x-amz-request-id"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+						
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"32FE2CEB32F5EE25",strlen("32FE2CEB32F5EE25")+1);
+						
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"x-amz-request-id", "32FE2CEB32F5EE25")==0)
+			err_sys("head_object_header_yes MHD_add_response_header x-amz-request-id error");
+			
+	}
+
+	return 1;
+}
 
 
 
@@ -878,7 +835,7 @@ int head_bucket_header_no(struct MHD_Response *response,struct sender_head send_
 	char *temp,*date;
 	temp=(char *)malloc(BUFLENGTH*sizeof(char));
 	//header_add=(char *)malloc(BUFLENGTH*sizeof(char));
-//*******************************NEW CODE******************
+	//*******************************NEW CODE******************
 
 	date=(char *)malloc(BUFLENGTH*sizeof(char));
 	//header_add=(char *)malloc(BUFLENGTH*sizeof(char));
@@ -911,64 +868,53 @@ int head_bucket_header_no(struct MHD_Response *response,struct sender_head send_
 
 
 
-		header_add = MHD_get_response_header (response,"Connection");	
+	header_add = MHD_get_response_header (response,"Connection");	
 
 
-			// ltoa(buf.st_size,temp,10);
-			if (header_add != NULL)
-			{
+	// ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
 					
-						//err_sys("get_object_header_yes Tran_Date error");
-					 strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
-					
-			}
-			else
-			{
-				if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
-					err_sys("head_bucket_header_no MHD_add_response_header Connection error");
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
+			err_sys("head_bucket_header_no MHD_add_response_header Connection error");
 		
-			}
+	}
 
-		if(MHD_add_response_header(response,"Server", "Store B409")==0)
-				err_sys("head_bucket_header_no MHD_add_response_header Content-Length error");
+	if(MHD_add_response_header(response,"Server", "Store B409")==0)
+		err_sys("head_bucket_header_no MHD_add_response_header Content-Length error");
 			
-	
-		
 
-	
-		header_add = MHD_get_response_header (response,"Server"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
+	header_add = MHD_get_response_header (response,"Server"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
 						
-							//err_sys("head_bucket_header_no Tran_Date error");
-			 strncpy(header_add,"Store B409",strlen("Store B409")+1);
+		//err_sys("head_bucket_header_no Tran_Date error");
+		strncpy(header_add,"Store B409",strlen("Store B409")+1);
 						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"x-amz-delete-marker", "TRUE")==0)
-				err_sys("head_bucket_header_no MHD_add_response_header x-amz-delete-marker error");
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"x-amz-delete-marker", "TRUE")==0)
+			err_sys("head_bucket_header_no MHD_add_response_header x-amz-delete-marker error");
 			
-		}
+	}
 		
-		return 1;
-
-
-
-
-
-
-
-
-
+	return 1;
 }
+
+
 
 int put_bucket_header_yes(struct MHD_Response *response,struct sender_head send_header)
 {
 
 	
-		char *header_add,*temp,*date;
+	char *header_add,*temp,*date;
 	struct stat buf;
 	temp=(char *)malloc(BUFLENGTH*sizeof(char));
 
@@ -986,11 +932,8 @@ int put_bucket_header_yes(struct MHD_Response *response,struct sender_head send_
 	}
 	else
 	{
-
-
 		//if(Gen_Date(header_add)==0)
 		if(Gen_Date(date)==0)
-
 			err_sys("post_bucket_header_yes Gen_Date error");
 		//printf("%s\n",header_add);
 		printf("HEAD BUCKET HEADER 919 line in orh.c date: %s\n",date);
@@ -1007,84 +950,72 @@ int put_bucket_header_yes(struct MHD_Response *response,struct sender_head send_
 	}
 
 
-		header_add = MHD_get_response_header (response,"Connection");	
-			// ltoa(buf.st_size,temp,10);
-			if (header_add != NULL)
+	header_add = MHD_get_response_header (response,"Connection");	
+	// ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
 
-			{
+	{
 					
-						//err_sys("get_object_header_yes Tran_Date error");
-					 strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
-
-					
-			}
-			else
-			{
-				if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
-					err_sys("post_bucket_header_yes MHD_add_response_header Connection error");
-
-		
-
-			}
-
-
-
-	
-   
-		
-		header_add = MHD_get_response_header (response,"Server"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"Store B409",strlen("Store B409")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"Server", "Store B409")==0)
-				err_sys("post_bucket_header_yes MHD_add_response_header Server error");
-			
-		}
-
-
-
-		header_add = MHD_get_response_header (response,"x-amz-id-2"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80",strlen("JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"x-amz-id-2", "JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80")==0)
-				err_sys("post_bucket_header_yes MHD_add_response_header x-amz-id-2 error");
-			
-		}
-
-
-
-		header_add = MHD_get_response_header (response,"x-amz-request-id"); 
-				//ltoa(buf.st_size,temp,10);
-		if (header_add != NULL)
-		{
-						
-							//err_sys("get_object_header_yes Tran_Date error");
-			 strncpy(header_add,"32FE2CEB32F5EE25",strlen("32FE2CEB32F5EE25")+1);
-						
-		}
-		else
-		{
-			if(MHD_add_response_header(response,"x-amz-request-id", "32FE2CEB32F5EE25")==0)
-				err_sys("post_bucket_header_yes MHD_add_response_header x-amz-request-id error");
-			
-		}	
-		return 1;
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,send_header.Connection,strlen(send_header.Connection)+1);
 	}
+	else
+	{
+		if(MHD_add_response_header(response,"Connection", send_header.Connection)==0)
+			err_sys("post_bucket_header_yes MHD_add_response_header Connection error");
+	}
+
+	header_add = MHD_get_response_header (response,"Server"); 
+				//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+						
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"Store B409",strlen("Store B409")+1);
+						
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"Server", "Store B409")==0)
+			err_sys("post_bucket_header_yes MHD_add_response_header Server error");
+			
+	}
+
+	header_add = MHD_get_response_header (response,"x-amz-id-2"); 
+				//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+						
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80",strlen("JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80")+1);
+						
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"x-amz-id-2", "JuKZqmXuiwFeDQxhD7M8KtsKobSzWA1QEjLbTMTagkKdBX2z7Il/jGhDeJ3j6s80")==0)
+			err_sys("post_bucket_header_yes MHD_add_response_header x-amz-id-2 error");
+			
+	}
+
+
+
+	header_add = MHD_get_response_header (response,"x-amz-request-id"); 
+	//ltoa(buf.st_size,temp,10);
+	if (header_add != NULL)
+	{
+						
+		//err_sys("get_object_header_yes Tran_Date error");
+		strncpy(header_add,"32FE2CEB32F5EE25",strlen("32FE2CEB32F5EE25")+1);
+						
+	}
+	else
+	{
+		if(MHD_add_response_header(response,"x-amz-request-id", "32FE2CEB32F5EE25")==0)
+			err_sys("post_bucket_header_yes MHD_add_response_header x-amz-request-id error");
+			
+	}	
+	return 1;
+}
 
 
 
