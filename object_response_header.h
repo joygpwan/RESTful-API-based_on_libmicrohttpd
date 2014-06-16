@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) Guangping Wan (joygpwan)
+ */
+
 #ifndef OBJECT_RESPONSE_HEADER_H
 #define OBJECT_RESPONSE_HEADER_H
 
@@ -64,7 +68,7 @@ iterate_post (void *coninfo_cls, enum MHD_ValueKind kind, const char *key,
               size_t size);
 
 
- int  send_page (struct MHD_Connection *connection, const char *page,int status_code);
+int  send_page (struct MHD_Connection *connection, const char *page,int status_code);
 
 
 #endif
