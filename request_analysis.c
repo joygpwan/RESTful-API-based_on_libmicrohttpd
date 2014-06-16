@@ -133,7 +133,6 @@ request_get(void *cls, struct MHD_Connection *connection,const char *url, const 
 }
 
 
-
 int
 request_put(void *cls, struct MHD_Connection *connection,         \
                       const char *url, const char *method,         \
@@ -196,80 +195,80 @@ request_put(void *cls, struct MHD_Connection *connection,         \
 		printf(" PUT :  lookup content-type before  set:   %s  \n " ,MHD_lookup_connection_value(connection,MHD_HEADER_KIND,MHD_HTTP_HEADER_CONTENT_TYPE) );
 
 		if (NULL == *con_cls)
-    		{
+    	{
       			struct connection_info_struct *con_info;
-			if (nr_of_uploading_clients >= MAXCLIENTS)
-				return send_page (connection, busypage, MHD_HTTP_SERVICE_UNAVAILABLE);
+				if (nr_of_uploading_clients >= MAXCLIENTS)
+					return send_page (connection, busypage, MHD_HTTP_SERVICE_UNAVAILABLE);
 				
-			con_info = malloc (sizeof (struct connection_info_struct));
+				con_info = malloc (sizeof (struct connection_info_struct));
       			if (NULL == con_info)
         			return MHD_NO;
 
-			con_info->fp = NULL;
+				con_info->fp = NULL;
 
-   			if(MHD_set_connection_value(connection,MHD_HEADER_KIND,MHD_HTTP_HEADER_CONTENT_TYPE, MHD_HTTP_POST_ENCODING_MULTIPART_FORMDATA)==MHD_YES)
-				printf("enctype= url  successs!\n");
-			printf(" now  lookup enctype   %s  \n " ,MHD_lookup_connection_value(connection,MHD_HEADER_KIND,MHD_HTTP_HEADER_CONTENT_TYPE) );
+				if(MHD_set_connection_value(connection,MHD_HEADER_KIND,MHD_HTTP_HEADER_CONTENT_TYPE, MHD_HTTP_POST_ENCODING_MULTIPART_FORMDATA)==MHD_YES)
+					printf("enctype= url  successs!\n");
+				printf(" now  lookup enctype   %s  \n " ,MHD_lookup_connection_value(connection,MHD_HEADER_KIND,MHD_HTTP_HEADER_CONTENT_TYPE) );
 
-			if(MHD_set_connection_value(connection,MHD_HEADER_KIND,"type","file")==MHD_YES)
-			{
-				if (0 == strcmp (method, "PUT"))
+				if(MHD_set_connection_value(connection,MHD_HEADER_KIND,"type","file")==MHD_YES)
 				{
-					con_info->postprocessor =MHD_create_post_processor (connection, POSTBUFFERSIZE,iterate_post, (void *) con_info);
-					if (NULL == con_info->postprocessor)
+					if (0 == strcmp (method, "PUT"))
 					{
-						free (con_info);
-						printf("MHD_create_post_processor error!\n");
-						return MHD_NO;
-					}
+						con_info->postprocessor =MHD_create_post_processor (connection, POSTBUFFERSIZE,iterate_post, (void *) con_info);
+						if (NULL == con_info->postprocessor)
+						{
+							free (con_info);
+							printf("MHD_create_post_processor error!\n");
+							return MHD_NO;
+						}
 
-					nr_of_uploading_clients++;
-					con_info->connectiontype = POST;
-					con_info->answercode = MHD_HTTP_OK;
-					con_info->answerstring = completepage;
-				}
-				else
+						nr_of_uploading_clients++;
+						con_info->connectiontype = POST;
+						con_info->answercode = MHD_HTTP_OK;
+						con_info->answerstring = completepage;
+					}
+					else
         			
         				con_info->connectiontype = GET;
-				con_cls = (void *) con_info;
-				return MHD_YES;
-			}
-				
-			if (0 == strcmp (method, "GET"))
-    			{
-      				char buffer[1024];
-				snprintf (buffer, sizeof (buffer), askpage, nr_of_uploading_clients);
-				return send_page (connection, buffer, MHD_HTTP_OK);
-			}
-
-			if (0 == strcmp (method, "PUT"))
-			{
-				struct connection_info_struct *con_info = *con_cls;
-				printf("before  MHD_post_process  upload_data_size is %d \n",*upload_data_size);
-				if (0 != *upload_data_size)
-				{
-					printf("now is  MHD_post_process  ,before  \n");
-					printf(" now  before MHD_post_process  enctype    %s  \n " ,MHD_lookup_connection_value(connection,MHD_HEADER_KIND,MHD_HTTP_HEADER_CONTENT_TYPE) );
-					if( MHD_post_process (con_info->postprocessor, upload_data,*upload_data_size)==MHD_YES)
-					printf("MHD_post_process sucess \n");
-
-					*upload_data_size = 0;
+					con_cls = (void *) con_info;
 					return MHD_YES;
 				}
-				else
-				{
-					if (NULL != con_info->fp)
-					{
-						fclose (con_info->fp);
-						con_info->fp = NULL; 
-					}
-	 
-	 				return send_page (connection, con_info->answerstring,con_info->answercode);
+				
+				if (0 == strcmp (method, "GET"))
+    			{
+      				char buffer[1024];
+					snprintf (buffer, sizeof (buffer), askpage, nr_of_uploading_clients);
+					return send_page (connection, buffer, MHD_HTTP_OK);
 				}
 
-				//  return send_page (connection, con_info->answerstring,con_info->answercode);
-  				return send_page (connection, errorpage, MHD_HTTP_BAD_REQUEST);
-			}
+				if (0 == strcmp (method, "PUT"))
+				{
+					struct connection_info_struct *con_info = *con_cls;
+					printf("before  MHD_post_process  upload_data_size is %d \n",*upload_data_size);
+					if (0 != *upload_data_size)
+					{
+						printf("now is  MHD_post_process  ,before  \n");
+						printf(" now  before MHD_post_process  enctype    %s  \n " ,MHD_lookup_connection_value(connection,MHD_HEADER_KIND,MHD_HTTP_HEADER_CONTENT_TYPE) );
+						if( MHD_post_process (con_info->postprocessor, upload_data,*upload_data_size)==MHD_YES)
+							printf("MHD_post_process sucess \n");
+
+						*upload_data_size = 0;
+						return MHD_YES;
+					}
+					else
+					{
+						if (NULL != con_info->fp)
+						{
+							fclose (con_info->fp);
+							con_info->fp = NULL; 
+						}
+	 
+						return send_page (connection, con_info->answerstring,con_info->answercode);
+					}
+
+					//  return send_page (connection, con_info->answerstring,con_info->answercode);
+					return send_page (connection, errorpage, MHD_HTTP_BAD_REQUEST);
+				}
 		}
 		return MHD_NO;
 	}
